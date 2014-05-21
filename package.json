@@ -1,9 +1,23 @@
 {
-  "name": "blok.io",
-  "version": "0.0.1",
+  "name": "blok-io",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skovsgaard/blok-io"
+  },
+  "keywords": [
+    "realtime",
+    "newsfeed",
+    "blog"
+  ],
+  "author": "skovsgaard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skovsgaard/blok-io/issues"
   },
   "dependencies": {
     "express": "3.4.8",
