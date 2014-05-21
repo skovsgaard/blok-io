@@ -34,9 +34,15 @@ if ('development' == app.get('env')) {
 app.get('/', function(req, res) {
   res.render('index', {title:'Welcome tho!'});
 });
-app.get('/testpage', function(req, res) {
-  res.render('index', {title: 'TEST'});
+
+app.get('/admin', function(req, res) {
+  res.render('admin', {title: 'the admin'});
+  io.socket.removeAllListeners('connection');
 });
+
+app.post('/postpost', function(req, res){
+  res.send("GREAT SUCCESS!\n" + req.body.postBody);
+})
 
 var io = require('socket.io').listen(server);
 

@@ -2,21 +2,13 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/css/style.css' />
   </head>
   <body>
     <h1><%= title %></h1>
     <p id="topP">Welcome to <%= title %></p>
     <script src="/socket.io/socket.io.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-      var socket = io.connect('http://localhost');
-      socket.on('news', function(data) {
-        for (var x in data) {
-          $('<p>' + x + ': ' + data[x] + '</p>').insertAfter('#topP');
-        }
-        socket.emit('my other event', {my: 'data'});
-      });
-    </script>
+    <script src="/js/index.js"></script>
   </body>
 </html>
