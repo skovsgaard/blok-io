@@ -7,7 +7,10 @@
   <body>
     <h1><%= title %></h1>
     <p id="topP">Welcome to <%= title %></p>
-    <form id="postform" method="post" action="/postpost">
+    <% if (msg !== undefined) { %>
+      <p id="msg"><%= msg %></p>
+    <% } %>
+    <form id="postform" method="post" action="/admin">
       <input id="post-title" type="text" placeholder="Enter a title!" name="postTitle"/><br/>
       <textarea id="post-content" name="postBody" placeholder="Enter your text here!"></textarea>
       <input type="submit" name="submit" id="post-submit" value="Post!" />

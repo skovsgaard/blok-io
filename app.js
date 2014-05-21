@@ -39,16 +39,17 @@ if ('development' == app.get('env')) {
 
 // Route and render the base path
 app.get('/', function(req, res) {
-  res.render('index', {title:'Welcome tho!'});
+  res.render('index', {title: 'Welcome tho!'});
 });
 
 // Route and render the admin interface
 app.get('/admin', function(req, res) {
-  res.render('admin', {title: 'the admin'});
+
+  res.render('admin', {title: 'the admin', msg: ''});
 });
 
 // Make a new post from within the admin
-app.post('/postpost', function(req, res){
+app.post('/admin', function(req, res){
   if (req.body.postTitle) {
     var key = {
       title: req.body.postTitle,
@@ -61,19 +62,44 @@ app.post('/postpost', function(req, res){
     }
   }
 
-  if (req.body.postBody) var val = {text: req.body.postBody};
+  if (req.body.postBody) {
+    var val = {text: req.body.postBody};
+  } else {
+    var val = {text: ''};
+  }
 
-  res.end("The data to be written is: \n" +
-          JSON.stringify(key, null, '  ') +
-          ": " + 
-          JSON.stringify(val, null, '  ')
-         );
+  postDB.put(key, val, function(err) {
+    if (err) {
+      console.log(err);
+      res.render('admin', {
+        title: 'the admin',
+        msg: 'Post failed: ' + err
+      });
+    }
+
+    
+    io.sockets.emit('feedUpdate', {key: key, val: val});
+
+      //io.sockets.emit('feedError', {data: err});
+
+    res.render('admin', {
+      title: 'the admin',
+      msg: 'Post successful'
+    });
+  });
 });
 
 var io = require('socket.io').listen(server);
 
-io.sockets.on('connection', function(socket) {
-  socket.emit('news', {sup: 'heyoo'});
-});
-
 console.log('Express listening on port 3000');
+
+io.on('connection', function(socket) {
+  postDB.createReadStream()
+    .on('data', function(data) {
+      socket.emit('baseFeed', data);
+    })
+    .on('error', function(err) {
+      socket.emit('feedError', err);
+      console.log(err);
+    })
+});
