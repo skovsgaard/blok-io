@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/css/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p id="topP">Welcome to <%= title %></p>
+    <form id="postform" method="post" action="/postpost">
+      <textarea id="post-content" name="postBody" placeholder="Enter your text here!"></textarea>
+      <input type="submit" name="submit" id="post-submit" value="Post!" />
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!--    <script src="/js/admin.js"></script> -->
+  </body>
+</html>
