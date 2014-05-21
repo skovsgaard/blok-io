@@ -8,7 +8,17 @@ var http = require('http');
 var path = require('path');
 var level = require('level');
 
-var db = level();
+// Data store connection to LevelDB
+var postDB = level('./posts', {
+  valueEncoding: 'json',
+  keyEncoding: 'json'
+}, function(err, db) {
+  if (err) {
+    console.error('Something terrible happened: ');
+    throw err;
+  }
+});
+
 var app = express();
 var server = app.listen(3000);
 
@@ -35,12 +45,29 @@ app.get('/', function(req, res) {
 // Route and render the admin interface
 app.get('/admin', function(req, res) {
   res.render('admin', {title: 'the admin'});
-  io.socket.removeAllListeners('connection');
 });
 
 // Make a new post from within the admin
 app.post('/postpost', function(req, res){
-  res.send("GREAT SUCCESS!\n" + req.body.postBody);
+  if (req.body.postTitle) {
+    var key = {
+      title: req.body.postTitle,
+      time: Date.now()
+    };
+  } else {
+    var key = {
+      title: 'no title',
+      time: Date.now()
+    }
+  }
+
+  if (req.body.postBody) var val = {text: req.body.postBody};
+
+  res.end("The data to be written is: \n" +
+          JSON.stringify(key, null, '  ') +
+          ": " + 
+          JSON.stringify(val, null, '  ')
+         );
 });
 
 var io = require('socket.io').listen(server);
