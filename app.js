@@ -91,7 +91,7 @@ app.post('/admin', function(req, res){
 
 var io = require('socket.io').listen(server);
 
-console.log('Express listening on port 3000');
+console.log('Express listening on port ' + process.env.PORT);
 
 io.on('connection', function(socket) {
   postDB.createReadStream()

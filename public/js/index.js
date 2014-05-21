@@ -1,5 +1,5 @@
 (function() {
-  var socket = io.connect('http://localhost');
+  var socket = io.connect('http://blog-io.herokuapp.com');
 
   socket.on('baseFeed', function(data) {
     //for (var x in data) {
