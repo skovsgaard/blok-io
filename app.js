@@ -20,7 +20,7 @@ var postDB = level('./posts', {
 });
 
 var app = express();
-var server = app.listen(3000);
+var server = app.listen(process.env.PORT || 3000);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
