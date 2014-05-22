@@ -28,7 +28,8 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(express.methodOverride());
+app.use(express.cookieParser());
+app.use(express.session({secret: 'totallyasecret'}));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -42,10 +43,35 @@ app.get('/', function(req, res) {
   res.render('index', {title: 'Welcome tho!'});
 });
 
+// GET for the login-page
+app.get('/login', function(req, res) {
+  res.render('login', {
+    title: 'Please log in',
+    msg: ''
+  });
+});
+
+// POST for the mock login
+app.post('/login', function(req, res) {
+  if (req.body.email === 'abcd@efg.hi' && req.body.pass === '#thistotallyworks') {
+    req.session.auth = true;
+    res.redirect('/admin');
+  } else {
+    req.session.auth = false;
+    res.render('login', {
+      title: 'Please log in.',
+      msg: 'Incorrect email or password.'
+    });
+  }
+})
+
 // Route and render the admin interface
 app.get('/admin', function(req, res) {
-
-  res.render('admin', {title: 'the admin', msg: ''});
+  if (req.session.auth) {
+    res.render('admin', {title: 'the admin', msg: ''});
+  } else {
+    res.redirect('/login');
+  }
 });
 
 // Make a new post from within the admin
@@ -91,7 +117,7 @@ app.post('/admin', function(req, res){
 
 var io = require('socket.io').listen(server);
 
-console.log('Express listening on port ' + process.env.PORT);
+console.log('Express listening on port ' + (process.env.PORT || 3000));
 
 io.on('connection', function(socket) {
   postDB.createReadStream()
@@ -103,3 +129,14 @@ io.on('connection', function(socket) {
       console.log(err);
     })
 });
+
+process.on('exit', function(code) {
+  console.log('Node process exiting with code: ' + code);
+
+  postDB.close(function(err) {
+    if (err) {
+      return console.error('Something went wrong: ' + err);
+    }
+    console.log('Closing LevelDB store for posts.');
+  })
+})
