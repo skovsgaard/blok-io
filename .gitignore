@@ -26,3 +26,6 @@ node_modules
 
 # Don't include the LevelDB dir with the posts DB
 posts
+
+# Don't include the nohup file
+nohup.out
