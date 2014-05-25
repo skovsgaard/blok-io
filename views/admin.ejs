@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/css/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p id="topP">Welcome to <%= title %></p>
-    <% if (msg !== undefined) { %>
+<% include header %>
+
+  <article class="feeditem">
+    <h4 class="feedhead" id="topP">Welcome to <%= title %></h4>
+
+    <% if (msg != '') { %>
       <p id="msg"><%= msg %></p>
     <% } %>
+
     <form id="postform" method="post" action="/admin">
-      <input id="post-title" type="text" placeholder="Enter a title!" name="postTitle"/><br/>
+      <input id="post-title" type="text" placeholder="Enter a title!" name="postTitle"/>
       <textarea id="post-content" name="postBody" placeholder="Enter your text here!"></textarea>
       <input type="submit" name="submit" id="post-submit" value="Post!" />
     </form>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!--    <script src="/js/admin.js"></script> -->
-  </body>
-</html>
+  </article>
+    
+<% include footer %>

@@ -2,25 +2,22 @@
   var socket = io.connect();
 
   socket.on('baseFeed', function(data) {
-    //for (var x in data) {
-      //var displayObject = data[x];
-      $('<div class="feedItem"><p>' +
-        data.key.title +
-        ': ' +
-        data.value.text +
-        '</p></div>'
-       ).insertAfter('#main-header');
-    //}
+    $('<article class="feeditem"><h4 class="feedhead">' +
+      data.key.title +
+      '</h4><p class="feedbody">' +
+      data.value.text +
+      '</p></article>'
+     ).prependTo('section.content');
     socket.removeListener('baseFeed');
   });
 
   socket.on('feedUpdate', function(data) {
-    $('<div class="feedItem"><p>' +
+    $('<article class="feeditem"><h4 class="feedhead">' +
       data.key.title +
-      ': ' +
+      '</h4><p class="feedbody">' +
       data.val.text + 
-      '</p></div>'
-     ).insertBefore('.feedItem');
+      '</p></article>'
+     ).prependTo('section.content');
     
     console.log(JSON.stringify(data, null, '  '));
   });
