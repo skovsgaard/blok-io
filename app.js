@@ -40,7 +40,7 @@ if ('development' == app.get('env')) {
 
 // Route and render the base path
 app.get('/', function(req, res) {
-  res.render('index', {title: 'Welcome tho!'});
+  res.render('index', {title: 'Welcome to blok!'});
 });
 
 // GET for the login-page
