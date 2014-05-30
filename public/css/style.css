@@ -6,6 +6,15 @@
   src: url('/fonts/FiraSans-Light.woff');
 }
 
+@media screen and (max-width: 529px) {
+  #logo span {
+    font-size: 50px;
+  }
+  #logo img {
+    max-height: 34px;
+  }
+}
+
 body {
   margin: 0;
   background-color: #f5f5f5;
