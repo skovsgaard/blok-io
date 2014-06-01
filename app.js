@@ -119,6 +119,7 @@ var io = require('socket.io').listen(server);
 
 console.log('Express listening on port ' + (process.env.PORT || 3000));
 
+// Start listening for new connections with Socket.io
 io.on('connection', function(socket) {
   postDB.createReadStream()
     .on('data', function(data) {
@@ -130,6 +131,8 @@ io.on('connection', function(socket) {
     })
 });
 
+// Make sure the database is closed when the application is shut down;
+// otherwise, write out the error that occurred.
 process.on('exit', function(code) {
   console.log('Node process exiting with code: ' + code);
 
