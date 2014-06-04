@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -102,11 +101,10 @@ app.post('/admin', function(req, res){
         msg: 'Post failed: ' + err
       });
     }
-
     
     io.sockets.emit('feedUpdate', {key: key, val: val});
 
-      //io.sockets.emit('feedError', {data: err});
+    //io.sockets.emit('feedError', {data: err});
 
     res.render('admin', {
       title: 'the admin',
@@ -128,7 +126,23 @@ io.on('connection', function(socket) {
     .on('error', function(err) {
       socket.emit('feedError', err);
       console.log(err);
-    })
+    });
+
+
+  socket.on('deletePost', function(data) {
+    var delObj = {
+      title: data.postTitle,
+      time: data.postId
+    };
+    console.log('Deleting where key: ' + JSON.stringify(delObj, null, '  '));
+
+    postDB.del(delObj, function(err) {
+      if (err) {
+        console.log('Something went wrong: ' + err);
+      }
+      console.log('Post successfully deleted.');
+    });
+  });
 });
 
 // Make sure the database is closed when the application is shut down;

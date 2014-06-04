@@ -122,3 +122,7 @@ article.feeditem {
   margin-bottom: 5px;
   max-width: 100%;
 }
+
+.delete-post {
+  float: right;
+}
