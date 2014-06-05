@@ -32,6 +32,12 @@
     console.log(JSON.stringify(data, null, '  '));
   });
 
+  socket.on('postUpdate', function(data) {
+    var $toUpdate = $('section.content').find('[data-id="' + data.key.time + '"]');
+    $toUpdate.children('h4').text(data.key.title);
+    $toUpdate.children('p').text(data.val.text);
+  });
+
 })();
 
 

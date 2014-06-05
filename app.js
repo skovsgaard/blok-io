@@ -138,11 +138,36 @@ io.on('connection', function(socket) {
 
     postDB.del(delObj, function(err) {
       if (err) {
-        console.log('Something went wrong: ' + err);
+        console.log('Something went wrong when deleting: ' + err);
       }
       console.log('Post successfully deleted.');
     });
   });
+
+  socket.on('updatePost', function(data) {
+    var updateObj = {
+      title: data.postTitle,
+      time: data.postId
+    };
+    var updateContent = {
+      text: data.postContent
+    };
+    console.log('Updating post where key: ' + JSON.stringify(updateObj, null, '  '));
+    console.log('with: ' + JSON.stringify(updateContent, null, '  '));
+
+    postDB.put(updateObj, updateContent, function(err) {
+      if (err) {
+        console.log('Something went wrong when updating: ' + err);
+      }
+      console.log('Post successfully updated.');
+    });
+
+    io.sockets.emit('postUpdate', {
+      key: updateObj,
+      val: updateContent
+    });
+  });
+
 });
 
 // Make sure the database is closed when the application is shut down;

@@ -123,6 +123,7 @@ article.feeditem {
   max-width: 100%;
 }
 
-.delete-post {
+.edit-post, .delete-post {
   float: right;
+  margin: 5px;
 }
