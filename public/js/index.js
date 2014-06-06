@@ -38,6 +38,13 @@
     $toUpdate.children('p').text(data.val.text);
   });
 
+  socket.on('postDelete', function(data) {
+    var $toDelete = $('section.content').find('[data-id="' + data.key.time + '"]');
+    $toDelete.fadeOut(500, function() {
+      $(this).remove();
+    });
+  });
+
 })();
 
 

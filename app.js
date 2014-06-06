@@ -117,7 +117,7 @@ var io = require('socket.io').listen(server);
 
 console.log('Express listening on port ' + (process.env.PORT || 3000));
 
-// Start listening for new connections with Socket.io
+// When a client connects, set the listeners for updates to the client.
 io.on('connection', function(socket) {
   postDB.createReadStream()
     .on('data', function(data) {
@@ -141,6 +141,10 @@ io.on('connection', function(socket) {
         console.log('Something went wrong when deleting: ' + err);
       }
       console.log('Post successfully deleted.');
+    });
+
+    io.sockets.emit('postDelete', {
+      key: delObj
     });
   });
 
@@ -167,7 +171,6 @@ io.on('connection', function(socket) {
       val: updateContent
     });
   });
-
 });
 
 // Make sure the database is closed when the application is shut down;

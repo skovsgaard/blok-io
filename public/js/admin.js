@@ -36,6 +36,7 @@
       var oldText = $(this).siblings('p').text();
       console.log(id);
       
+      $('.editor').remove();
       $(this).parent().append(
         '<div class="editor">' +
         '<textarea>' +
@@ -62,6 +63,10 @@
           postContent: newText
         };
         socket.emit('updatePost', updateObj);
+        
+        $(this).parent().siblings('h4').text(title);
+        $(this).parent().siblings('p').text(newText);
+
         $(this).parent().fadeOut(500, function() {
           $(this).remove();
         });

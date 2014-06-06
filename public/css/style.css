@@ -102,7 +102,10 @@ article.feeditem {
   margin: 20px 0;
 }
 
-#email, #pass, #loginsub, #post-title, #post-content, #post-submit {
+#email, #pass, #loginsub, #post-title,
+#post-content, #post-submit,
+.edit-post, .delete-post,
+.editor * {
   border-style: solid;
   border-color: #ababab;
   background: none;
@@ -113,7 +116,7 @@ article.feeditem {
   padding: 5px 10px;
 }
 
-#postform {
+#postform, .editor {
   margin: 20px 0;
 }
 
@@ -126,4 +129,8 @@ article.feeditem {
 .edit-post, .delete-post {
   float: right;
   margin: 5px;
+}
+
+.save-button, .cancel-button {
+  margin: 5px 5px 5px 0;
 }
