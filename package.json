@@ -20,9 +20,9 @@
     "url": "https://github.com/skovsgaard/blok-io/issues"
   },
   "dependencies": {
-    "express": "3.4.8",
     "ejs": "*",
-    "level": "*",
+    "express": "^3.21.2",
+    "level": "^8.0.0",
     "socket.io": "*"
   },
   "engines": {
